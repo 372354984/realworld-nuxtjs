@@ -6,38 +6,19 @@
           <form>
             <fieldset>
               <fieldset class="form-group">
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  placeholder="Article Title"
-                />
+                <input type="text" class="form-control form-control-lg" placeholder="Article Title" />
               </fieldset>
               <fieldset class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="What's this article about?"
-                />
+                <input type="text" class="form-control" placeholder="What's this article about?" />
               </fieldset>
               <fieldset class="form-group">
-                <textarea
-                  class="form-control"
-                  rows="8"
-                  placeholder="Write your article (in markdown)"
-                ></textarea>
+                <textarea class="form-control" rows="8" placeholder="Write your article (in markdown)"></textarea>
               </fieldset>
               <fieldset class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter tags"
-                />
+                <input type="text" class="form-control" placeholder="Enter tags" />
                 <div class="tag-list"></div>
               </fieldset>
-              <button
-                class="btn btn-lg pull-xs-right btn-primary"
-                type="button"
-              >
+              <button class="btn btn-lg pull-xs-right btn-primary" type="button">
                 Publish Article
               </button>
             </fieldset>
@@ -49,9 +30,11 @@
 </template>
 
 <script>
-export default {
-  name:"EditArticle"
-}
+  export default {
+    middleware: "authenticated",
+    name: "EditArticle",
+
+  }
 </script>
 
 <style>
