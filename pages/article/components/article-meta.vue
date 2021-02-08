@@ -19,15 +19,15 @@
     </div>
     <button class="btn btn-sm btn-outline-secondary" :class="{
       active:article.author.following
-    }">
+    }" @click="follow(article.author)">
       <i class="ion-plus-round"></i>
       &nbsp;
-      Follow Eric Simons <span class="counter">(10)</span>
+      {{article.author.following?'Unfollow':'Follow'}} {{article.author.username}}
     </button>
     &nbsp;&nbsp;
     <button class="btn btn-sm btn-outline-primary" :class="{
       active:article.favorited
-    }">
+    }" @click="onFavorite(article)" :disabled="favoriteDisabled">
       <i class="ion-heart"></i>
       &nbsp;
       Favorite Post <span class="counter">({{article.favoritesCount}})</span>
@@ -35,12 +35,55 @@
   </div>
 </template>
 <script>
+  import {
+    followUser,
+    unfollowUser,
+  } from "@/api/user.js"
+  import {
+    deleteFavorite,
+    addFavorite
+  } from "@/api/article";
+
   export default {
     name: "ArticleMeta",
     props: {
       article: {
         type: Object,
         required: true
+      }
+    },
+    data() {
+      return {
+        followDisabled: false,
+        favoriteDisabled: false,
+      }
+    },
+    methods: {
+      async follow(author) {
+        this.followDisabled = true
+        if (author.following) {
+          await unfollowUser(author.username)
+          author.following = false
+        } else {
+          await followUser(author.username)
+          author.following = true
+        }
+        this.followDisabled = false
+      },
+      async onFavorite(article) {
+        this.favoriteDisabled = true
+        if (article.favorited) {
+          // 取消点赞
+          await deleteFavorite(article.slug)
+          article.favorited = false
+          article.favoritesCount--
+        } else {
+          // 添加点赞
+          await addFavorite(article.slug)
+          article.favorited = true
+          article.favoritesCount++
+        }
+        this.favoriteDisabled = false
       }
     }
   }

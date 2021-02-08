@@ -21,7 +21,7 @@
               </nuxt-link>
             </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link ng-binding" to="/profile/666">
+              <nuxt-link class="nav-link ng-binding" :to="'/profile/'+user.username">
                 <img class="user-pic" :src="user.image" />
                 {{user.username}}
               </nuxt-link>

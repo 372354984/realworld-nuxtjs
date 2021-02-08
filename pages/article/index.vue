@@ -64,7 +64,6 @@
       const md = new MarkdownIt()
       article.body = md.render(article.body)
 
-      console.log(data)
       return {
         article
       }
